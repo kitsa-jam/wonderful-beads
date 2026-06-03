@@ -65,3 +65,59 @@ dist
 ```
 
 5. 点击 Deploy site。
+
+## 部署到 Hexo
+
+玩豆否是一个纯前端静态应用，可以放进 Hexo 的 `source` 目录，让其他用户通过你的 Hexo 公开网址直接访问。
+
+推荐访问路径：
+
+```text
+https://你的域名/wonderful-beads/
+```
+
+部署步骤：
+
+1. 在本项目中构建静态文件：
+
+```bash
+npm run build
+```
+
+2. 在你的 Hexo 项目中创建目录：
+
+```bash
+mkdir -p source/wonderful-beads
+```
+
+3. 将本项目 `dist` 目录里的所有文件复制到 Hexo 项目的 `source/wonderful-beads`：
+
+```bash
+cp -r dist/* /你的hexo项目/source/wonderful-beads/
+```
+
+Windows PowerShell 示例：
+
+```powershell
+Copy-Item -Path .\dist\* -Destination "D:\你的hexo项目\source\wonderful-beads" -Recurse -Force
+```
+
+也可以直接使用项目内脚本自动构建并复制：
+
+```powershell
+.\scripts\deploy-hexo.ps1 -HexoRoot "D:\你的hexo项目"
+```
+
+4. 回到 Hexo 项目，重新生成并部署：
+
+```bash
+hexo clean
+hexo generate
+hexo deploy
+```
+
+说明：项目已使用相对资源路径和 Hash 路由，适合部署在 Hexo 子目录中。生成页地址会是：
+
+```text
+https://你的域名/wonderful-beads/#/create
+```

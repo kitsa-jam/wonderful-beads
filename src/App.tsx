@@ -6,18 +6,19 @@ import { HomePage } from './pages/HomePage';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { ResultPage } from './pages/ResultPage';
 
+function getHashPath() {
+  const path = location.hash.replace(/^#/, '');
+  return path.startsWith('/') ? path : '/';
+}
+
 export default function App() {
-  const [path, setPath] = useState(location.pathname);
+  const [path, setPath] = useState(getHashPath);
   const Page = path === '/create' ? CreatePage : path === '/result' ? ResultPage : path === '/help' ? HelpPage : path === '/privacy' ? PrivacyPage : HomePage;
 
   useEffect(() => {
-    const updatePath = () => setPath(location.pathname);
-    addEventListener('popstate', updatePath);
-    addEventListener('wonderful:navigate', updatePath);
-    return () => {
-      removeEventListener('popstate', updatePath);
-      removeEventListener('wonderful:navigate', updatePath);
-    };
+    const updatePath = () => setPath(getHashPath());
+    addEventListener('hashchange', updatePath);
+    return () => removeEventListener('hashchange', updatePath);
   }, []);
 
   return <AppLayout page={path}><Page /></AppLayout>;

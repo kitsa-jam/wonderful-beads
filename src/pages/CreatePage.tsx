@@ -15,8 +15,7 @@ export function CreatePage() {
     }
     const result = await generatePattern(image, settings);
     setResult(result);
-    history.pushState(null, '', '/result');
-    dispatchEvent(new Event('wonderful:navigate'));
+    location.hash = '#/result';
   }
 
   return (
