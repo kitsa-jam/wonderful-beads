@@ -1,0 +1,1 @@
+﻿export function PrivacyPage(){ return <section className="doc"><h1>隐私说明</h1><article className="card"><p>图片仅在你的浏览器本地处理，不会上传到服务器。</p><p>玩豆否会使用 Canvas 在本地读取图片颜色，用于生成拼豆图纸、颜色清单和导出文件。刷新页面后，未导出的生成结果可能会丢失。</p></article></section> }

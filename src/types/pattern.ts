@@ -1,0 +1,11 @@
+﻿export type PaletteColor = { id: string; name: string; hex: string; series?: string };
+export type Palette = { id: string; name: string; versions: Record<string, PaletteColor[]> };
+export type GenerationMode = 'keep-ratio' | 'fit-board';
+export type MergeStrength = 'none' | 'light' | 'medium' | 'strong';
+export type MirrorMode = 'none' | 'horizontal' | 'vertical' | 'both';
+export type PatternStyle = 'blocks' | 'grid' | 'codes-grid';
+export type PatternSettings = { mode: GenerationMode; width: number; height: number; boardSize: number; paletteId: string; paletteVersion: string; maxColors: number; mergeStrength: MergeStrength; mirror: MirrorMode; style: PatternStyle };
+export type PatternCell = { row: number; col: number; colorId: string; colorName: string; hex: string };
+export type ColorStat = { colorId: string; colorName: string; hex: string; count: number };
+export type PatternResult = { cells: PatternCell[]; stats: ColorStat[]; width: number; height: number; totalBeads: number; usedColors: number; settings: PatternSettings; createdAt: string };
+export const defaultSettings: PatternSettings = { mode: 'keep-ratio', width: 52, height: 52, boardSize: 29, paletteId: 'mard', paletteVersion: '221', maxColors: 32, mergeStrength: 'medium', mirror: 'none', style: 'codes-grid' };

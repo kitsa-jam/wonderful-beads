@@ -1,0 +1,5 @@
+﻿import { ImagePlus, RotateCcw } from 'lucide-react';
+import { loadImage } from '../../utils/imageProcessor';
+import { usePatternStore } from '../../store/usePatternStore';
+import { Button } from '../common/Button';
+export function ImageUploader(){ const {imageUrl,setImage,reset}=usePatternStore(); async function onFile(file?:File){ if(!file) return; const img=await loadImage(file); setImage(img,URL.createObjectURL(file)); } return <section className="card uploader"><label className="drop"><input type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>onFile(e.target.files?.[0])}/>{imageUrl?<img src={imageUrl} alt="预览"/>:<span><ImagePlus size={36}/>上传 JPG、PNG 或 WEBP</span>}</label><div className="row"><Button variant="soft" onClick={()=>document.querySelector<HTMLInputElement>('input[type=file]')?.click()}><ImagePlus size={18}/>更换图片</Button><Button variant="ghost" onClick={reset}><RotateCcw size={18}/>重置</Button></div><p className="hint">图片仅在你的浏览器本地处理，不会上传到服务器。预览区域支持移动端自然缩放查看。</p></section> }

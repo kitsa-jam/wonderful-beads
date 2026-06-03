@@ -1,0 +1,12 @@
+﻿import type { Palette, PaletteColor } from '../types/pattern';
+
+const basic: PaletteColor[] = [
+  ['B01','奶油白','#fff8f2'],['B02','蜜桃粉','#ff91b8'],['B03','豆沙紫','#a98cff'],['B04','软糖黄','#ffd166'],['B05','浅绿','#b8e6d1'],['B06','莓果红','#e85d75'],['B07','湖水蓝','#69c8d7'],['B08','可可棕','#76584b'],['B09','夜色黑','#2f2f3a'],['B10','云朵灰','#d9d7df'],['B11','橙糖','#ff9f68'],['B12','薰衣草','#cbb8ff'],['B13','薄荷','#8fdcc2'],['B14','樱桃','#d94161'],['B15','天空','#8ecae6'],['B16','柠檬','#ffe680']
+].map(([id,name,hex])=>({id,name,hex,series:'Basic'}));
+const mardBase: PaletteColor[] = [
+  ['H01','珍珠白','#fffefe'],['H02','奶油','#fff1d6'],['H03','浅肤','#f7c9ad'],['H04','粉雾','#ffb4cf'],['H05','桃粉','#ff7fab'],['H06','玫瑰','#e84a7a'],['H07','红莓','#c9284d'],['H08','糖橙','#ff9b45'],['H09','南瓜','#f47c2c'],['H10','软糖黄','#ffd166'],['H11','柠檬黄','#f7e35f'],['H12','嫩芽绿','#c8e879'],['H13','薄荷绿','#9ee6c8'],['H14','湖绿','#4ec7aa'],['H15','孔雀蓝','#2aa7b8'],['H16','天蓝','#8ccff0'],['H17','晴空蓝','#4da3ff'],['H18','牛仔蓝','#3867d6'],['H19','夜蓝','#263b84'],['H20','薰衣草','#c7b5ff'],['H21','豆沙紫','#a98cff'],['H22','葡萄紫','#7952cc'],['H23','可可','#7a5948'],['H24','焦糖','#bd7b46'],['H25','浅灰','#d8d8df'],['H26','石墨','#777485'],['H27','黑巧','#2f2f3a'],['H28','透明粉','#ffd9e8'],['H29','珊瑚','#ff6f61'],['H30','草莓奶昔','#ffc2d9'],['H31','抹茶','#83c783'],['H32','森林','#357a56'],['H33','冰蓝','#c8f1ff'],['H34','海盐','#70d6ff'],['H35','梅子','#b23a8b'],['H36','米杏','#ead2ac']
+].map(([id,name,hex])=>({id,name,hex,series:'MARD'}));
+const extend = (n:number) => Array.from({length:n},(_,i)=>{ const hue=(i*47)%360; return { id:`M${String(i+37).padStart(3,'0')}`, name:`MARD 示例色 ${i+37}`, hex:hslToHex(hue, 58+(i%5)*5, 46+(i%6)*6), series:'MARD' }; });
+function hslToHex(h:number,s:number,l:number){ s/=100;l/=100; const k=(n:number)=>(n+h/30)%12; const a=s*Math.min(l,1-l); const f=(n:number)=>l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1))); return '#'+[f(0),f(8),f(4)].map(x=>Math.round(255*x).toString(16).padStart(2,'0')).join(''); }
+export const palettes: Palette[] = [{ id:'basic', name:'Basic 基础色卡', versions:{'16':basic} }, { id:'mard', name:'MARD 示例色卡', versions:{'72':mardBase.concat(extend(36)),'96':mardBase.concat(extend(60)),'144':mardBase.concat(extend(108)),'221':mardBase.concat(extend(185)),'238':mardBase.concat(extend(202)),'291':mardBase.concat(extend(255))} }];
+export const getPaletteColors = (paletteId:string, version:string) => palettes.find(p=>p.id===paletteId)?.versions[version] ?? palettes[1].versions['221'];
