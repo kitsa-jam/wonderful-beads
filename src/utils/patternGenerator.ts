@@ -3,7 +3,7 @@ import type { PatternResult, PatternSettings } from '../types/pattern';
 import { nearestColor, limitPalette } from './colorMatcher';
 import { sampleImage } from './imageProcessor';
 export async function generatePattern(img: HTMLImageElement, settings: PatternSettings): Promise<PatternResult> {
-  const pixels = sampleImage(img, settings.width, settings.height, settings.mirror);
+  const pixels = sampleImage(img, settings.width, settings.height, settings.mirror, settings.mode);
   const palette = getPaletteColors(settings.paletteId, settings.paletteVersion);
   const active = limitPalette(pixels, palette, settings.maxColors);
   const cells = pixels.map((p,i)=>{ const c=nearestColor(p.r,p.g,p.b,active); return { row:Math.floor(i/settings.width), col:i%settings.width, colorId:c.id, colorName:c.name, hex:c.hex }; });

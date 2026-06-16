@@ -48,6 +48,34 @@ dist
 
 6. 点击 Deploy。
 
+## 部署到 GitHub Pages
+
+推荐仓库名：
+
+```text
+wonderful-beads
+```
+
+部署后默认网址一般是：
+
+```text
+https://你的GitHub用户名.github.io/wonderful-beads/
+```
+
+本项目已包含 GitHub Actions 配置。把代码推送到 GitHub 后，在仓库的 `Settings -> Pages` 中把 Source 选择为 `GitHub Actions`，之后每次推送都会自动构建并发布。
+
+构建命令：
+
+```bash
+npm run build
+```
+
+输出目录：
+
+```text
+dist
+```
+
 ## 部署到 Netlify
 
 1. 将项目推送到 GitHub、GitLab 或 Bitbucket。
