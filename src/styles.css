@@ -615,7 +615,7 @@ footer span, footer a { display: flex; align-items: center; gap: 6px; }
     border-radius: 18px;
   }
   .patternTools { position: sticky; top: 112px; z-index: 4; }
-  .info { padding-bottom: 142px; }
+  .info { padding-bottom: 190px; }
   .info .exportPanel {
     position: fixed;
     left: 0;
@@ -639,7 +639,7 @@ footer span, footer a { display: flex; align-items: center; gap: 6px; }
     max-width: 520px;
     width: 100%;
     margin: 0 auto;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 8px;
   }
   .info .exportBar .btn {

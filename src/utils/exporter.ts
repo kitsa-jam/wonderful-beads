@@ -27,7 +27,35 @@ type BoardSlice = {
 
 export async function exportPNG(result: PatternResult, mode: ExportPatternMode) {
   const canvas = createCompletePatternCanvas(result, mode);
-  canvas.toBlob((blob) => blob && saveAs(blob, 'wonderful-beads-pattern.png'));
+  const blob = await canvasToBlob(canvas, 'image/png');
+  saveAs(blob, 'wonderful-beads-pattern.png');
+}
+
+export async function exportJPG(result: PatternResult, mode: ExportPatternMode) {
+  const canvas = createCompletePatternCanvas(result, mode);
+  const blob = await canvasToBlob(canvas, 'image/jpeg', 0.96);
+  saveAs(blob, 'wonderful-beads-pattern.jpg');
+}
+
+export async function saveJPGToAlbum(result: PatternResult, mode: ExportPatternMode) {
+  const canvas = createCompletePatternCanvas(result, mode);
+  const blob = await canvasToBlob(canvas, 'image/jpeg', 0.96);
+  const file = new File([blob], 'wonderful-beads-pattern.jpg', { type: 'image/jpeg' });
+  const nav = navigator as Navigator & {
+    canShare?: (data: ShareData & { files?: File[] }) => boolean;
+    share?: (data: ShareData & { files?: File[] }) => Promise<void>;
+  };
+
+  if (nav.canShare?.({ files: [file] }) && nav.share) {
+    await nav.share({
+      files: [file],
+      title: '玩豆否拼豆图纸',
+      text: '保存高清 JPG 图纸到手机相册',
+    });
+    return;
+  }
+
+  saveAs(blob, 'wonderful-beads-pattern.jpg');
 }
 
 export async function exportPDF(result: PatternResult, mode: ExportPatternMode) {
@@ -357,6 +385,18 @@ function makeCanvas(width: number, height: number) {
   canvas.width = Math.ceil(width);
   canvas.height = Math.ceil(height);
   return canvas;
+}
+
+function canvasToBlob(canvas: HTMLCanvasElement, type: string, quality?: number) {
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (blob) {
+        resolve(blob);
+      } else {
+        reject(new Error('图片生成失败，请稍后再试'));
+      }
+    }, type, quality);
+  });
 }
 
 function fillPage(ctx: CanvasRenderingContext2D, width: number, height: number) {

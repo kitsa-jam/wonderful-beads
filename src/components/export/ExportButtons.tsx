@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Download, FileJson, FileText, ImageDown } from 'lucide-react';
+import { Download, FileJson, FileText, ImageDown, Smartphone } from 'lucide-react';
 import type { PatternResult } from '../../types/pattern';
-import { exportCSV, exportJSON, exportPDF, exportPNG, type ExportPatternMode } from '../../utils/exporter';
+import { exportCSV, exportJPG, exportJSON, exportPDF, exportPNG, saveJPGToAlbum, type ExportPatternMode } from '../../utils/exporter';
 import { Button } from '../common/Button';
 
 export function ExportButtons({ result }: { result: PatternResult; targetId?: string }) {
@@ -14,6 +14,8 @@ export function ExportButtons({ result }: { result: PatternResult; targetId?: st
         <button className={mode === 'blocks' ? 'active' : ''} onClick={() => setMode('blocks')}>只显示色块</button>
       </div>
       <div className="exportBar">
+        <Button onClick={() => saveJPGToAlbum(result, mode)}><Smartphone size={18} />保存</Button>
+        <Button onClick={() => exportJPG(result, mode)}><ImageDown size={18} />JPG</Button>
         <Button onClick={() => exportPNG(result, mode)}><ImageDown size={18} />PNG</Button>
         <Button onClick={() => exportPDF(result, mode)}><Download size={18} />PDF</Button>
         <Button variant="soft" onClick={() => exportCSV(result)}><FileText size={18} />CSV</Button>
